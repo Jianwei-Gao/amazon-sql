@@ -1,3 +1,8 @@
+-- importing the survey csv into a table
+
+
+USE Amazon_Data;
+
 DROP TABLE IF EXISTS survey;
 CREATE TABLE survey(
 	survey_response_id TEXT NULL,

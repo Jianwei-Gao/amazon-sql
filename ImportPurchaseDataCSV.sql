@@ -1,12 +1,12 @@
-DROP DATABASE IF EXISTS Amazon_Data;
-CREATE DATABASE Amazon_Data;
+-- importing the amazon-purchases csv into a table
+
 USE Amazon_Data;
 
 DROP TABLE IF EXISTS purchases;
 CREATE TABLE purchases(
-	order_date Date NULL,
-    unit_price DOUBLE NULL,
-    quantity DOUBLE NULL,
+	order_date DATE NULL,
+    unit_price DOUBLE NOT NULL,
+    quantity DOUBLE NOT NULL,
     destination_state TEXT NULL,
     item_title TEXT NULL,
     product_code TEXT NULL,
@@ -14,20 +14,20 @@ CREATE TABLE purchases(
     survey_response_id TEXT NULL
 );
 
-Load Data Infile 'C:/Users/Jianwei/Desktop/SQL/Amazon purchase/amazon-purchases.csv'
-Into Table purchases
-Fields Terminated By ','
-Enclosed By '"'
-Lines Terminated By '\n'
-Ignore 1 lines
+LOAD DATA INFILE 'C:/Users/Jianwei/Desktop/SQL/Amazon purchase/amazon-purchases.csv'
+INTO TABLE purchases
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
 (@order_date, unit_price, quantity, 
 destination_state, item_title, product_code, 
 category, survey_response_id)
-Set 
+SET 
 	order_date = NULLIF(@order_date, ''),
     order_date = STR_TO_DATE(@order_date, '%Y-%m-%d'),
-    unit_price = NULLIF(unit_price, ''),
-    quantity = NULLIF(quantity, ''),
+	-- unit_price = NULLIF(unit_price, ''),
+    -- quantity = NULLIF(quantity, ''),
     destination_state = NULLIF(destination_state, ''),
     item_title = NULLIF(item_title, ''),
     product_code = NULLIF(product_code, ''),
