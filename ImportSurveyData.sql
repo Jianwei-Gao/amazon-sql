@@ -5,7 +5,7 @@ USE Amazon_Data;
 
 DROP TABLE IF EXISTS survey;
 CREATE TABLE survey(
-	survey_response_id TEXT NULL,
+	survey_response_id VARCHAR(64) PRIMARY KEY,
     age TEXT NULL,
     is_hispanic TEXT NULL,
     race TEXT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE survey(
     q_research_use TEXT NULL
 );
 
-LOAD DATA INFILE 'C:/Users/Jianwei/Desktop/SQL/Amazon purchase/survey.csv'
+LOAD DATA INFILE "C:/Users/Jianwei/Desktop/SQL/amazon-sql/survey.csv"
 INTO TABLE survey
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -42,7 +42,6 @@ usage_freq, use_cigarettes, use_marijuana, use_alcohol, personal_diabetes,
 personal_wheelchair, life_changes, q_sell_your_data, q_sell_consumer_data, 
 q_small_biz_use, q_census_use, q_research_use)
 SET 
-	survey_response_id = NULLIF(survey_response_id, ''),
     age = NULLIF(age, ''),
     is_hispanic = NULLIF(is_hispanic, ''),
     race = NULLIF(race, ''),

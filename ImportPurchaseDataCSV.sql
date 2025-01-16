@@ -11,10 +11,10 @@ CREATE TABLE purchases(
     item_title TEXT NULL,
     product_code TEXT NULL,
     category TEXT NULL,
-    survey_response_id TEXT NULL
+    survey_response_id VARCHAR(64) NOT NULL
 );
 
-LOAD DATA INFILE 'C:/Users/Jianwei/Desktop/SQL/Amazon purchase/amazon-purchases.csv'
+LOAD DATA INFILE "C:/Users/Jianwei/Desktop/SQL/amazon-sql/amazon-purchases.csv"
 INTO TABLE purchases
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -24,6 +24,7 @@ IGNORE 1 LINES
 destination_state, item_title, product_code, 
 category, survey_response_id)
 SET 
+	survey_response_id = NULLIF(survey_response_id,''), -- column have constaint NOT NULL, but this checks if csv file have any NULL inputs that needed to be handled
 	order_date = NULLIF(@order_date, ''),
     order_date = STR_TO_DATE(@order_date, '%Y-%m-%d'),
 	-- unit_price = NULLIF(unit_price, ''),
@@ -31,5 +32,4 @@ SET
     destination_state = NULLIF(destination_state, ''),
     item_title = NULLIF(item_title, ''),
     product_code = NULLIF(product_code, ''),
-    category = NULLIF(category, ''),
-    survey_response_id = NULLIF(survey_response_id, '');
+    category = NULLIF(category, '');
